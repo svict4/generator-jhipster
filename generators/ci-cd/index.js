@@ -87,11 +87,15 @@ module.exports = PipelineGenerator.extend({
                 this.template('_docker-registry.yml', `${this.DOCKER_DIR}docker-registry.yml`);
             }
         }
+        if (this.pipelines.includes('circle')) {
+            if (this.circleci2beta === true) {  
+                this.template('.circleci/_config.yml', 'config.yml');
+            } else {
+                this.template('_circle.yml', 'circle.yml');
+            } 
+        }
         if (this.pipelines.includes('gitlab')) {
             this.template('_.gitlab-ci.yml', '.gitlab-ci.yml');
-        }
-        if (this.pipelines.includes('circle')) {
-            this.template('_circle.yml', 'circle.yml');
         }
         if (this.pipelines.includes('travis')) {
             this.template('_travis.yml', '.travis.yml');
